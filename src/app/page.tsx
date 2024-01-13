@@ -54,12 +54,16 @@ export default function Home() {
         />
       </form>
 
-      {todos.map((todo) => (
-        <Checkbox
-          todo={todo}
-          onChange={handleChangeCheckBox}
-        />
-      ))}
+      {todos.length > 0 ? (
+        todos.map((todo) => (
+          <Checkbox
+            todo={todo}
+            onChange={handleChangeCheckBox}
+          />
+        ))
+      ) : (
+        <p>Lista de tarefas está vazia!</p>
+      )}
     </div>
   )
 }
