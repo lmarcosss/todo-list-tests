@@ -7,7 +7,7 @@ import { FilterStatusEnum } from '@/enums'
 const cases = [[FilterStatusEnum.COMPLETED, 2], [FilterStatusEnum.NOT_COMPLETED, 3], [FilterStatusEnum.ALL, 5]]
 
 describe("Home Page", () => {
-    it("Renderer page without to-do on list", () => {
+    it("Renderer page without todo's on list", () => {
         render(<Home />)
 
         const emptyText = screen.getByText("Lista de tarefas está vazia!")
@@ -15,7 +15,7 @@ describe("Home Page", () => {
         expect(emptyText).toBeInTheDocument()
     })
 
-    it("Add new to-do on list", async () => {
+    it("Add new todo on list", async () => {
         render(<Home />)
 
         const todoInput = screen.getByLabelText("Nova Tarefa")
