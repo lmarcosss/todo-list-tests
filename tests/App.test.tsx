@@ -6,7 +6,18 @@ import { FilterStatusEnum } from '@/enums'
 
 const cases = [[FilterStatusEnum.COMPLETED, 2], [FilterStatusEnum.NOT_COMPLETED, 3], [FilterStatusEnum.ALL, 5]]
 
-describe("Home Page", () => {
+const addNewTodo = async (newTodo: string) => {
+    const todoInput = screen.getByLabelText("Nova Tarefa")
+        userEvent.click(todoInput)
+
+        await userEvent.type(todoInput, newTodo)
+
+        const button = screen.getByRole("button")
+
+        userEvent.click(button)
+}
+
+describe("Home Page:", () => {
     it("Renderer page without todo's on list", () => {
         render(<Home />)
 
@@ -18,14 +29,7 @@ describe("Home Page", () => {
     it("Add new todo on list", async () => {
         render(<Home />)
 
-        const todoInput = screen.getByLabelText("Nova Tarefa")
-        userEvent.click(todoInput)
-
-        await userEvent.type(todoInput, "Tarefa 1")
-        
-        const button = screen.getByRole("button")
-
-        userEvent.click(button)
+        await addNewTodo("Tarefa 1")
 
         await waitFor(() => {
             const newTodo = screen.getByText("Tarefa 1")
@@ -36,14 +40,7 @@ describe("Home Page", () => {
     it("Change isChecked of new todo to true", async () => {
         render(<Home />)
 
-        const todoInput = screen.getByLabelText("Nova Tarefa")
-        userEvent.click(todoInput)
-
-        await userEvent.type(todoInput, "Tarefa 1")
-
-        const button = screen.getByRole("button")
-
-        userEvent.click(button)
+        await addNewTodo("Tarefa 1")
 
         await waitFor(async () => {
             const newTodo = screen.getByLabelText("Tarefa 1")
@@ -59,14 +56,7 @@ describe("Home Page", () => {
     it("Change isChecked of new todo to false", async () => {
         render(<Home />)
 
-        const todoInput = screen.getByLabelText("Nova Tarefa")
-        userEvent.click(todoInput)
-
-        await userEvent.type(todoInput, "Tarefa 1")
-
-        const button = screen.getByRole("button")
-
-        userEvent.click(button)
+        await addNewTodo("Tarefa 1")
 
         await waitFor(async () => {
             const newTodo = screen.getByLabelText("Tarefa 1")
@@ -85,28 +75,11 @@ describe("Home Page", () => {
      async (status, expectResult) => {
         render(<Home />)
 
-        const todoInput = screen.getByLabelText("Nova Tarefa")
-        const button = screen.getByRole("button")
-
-        userEvent.click(todoInput)
-        await userEvent.type(todoInput, "Tarefa 1")
-        userEvent.click(button)
-
-        userEvent.click(todoInput)
-        await userEvent.type(todoInput, "Tarefa 2")
-        userEvent.click(button)
-
-        userEvent.click(todoInput)
-        await userEvent.type(todoInput, "Tarefa 3")
-        userEvent.click(button)
-
-        userEvent.click(todoInput)
-        await userEvent.type(todoInput, "Tarefa 4")
-        userEvent.click(button)
-
-        userEvent.click(todoInput)
-        await userEvent.type(todoInput, "Tarefa 5")
-        userEvent.click(button)
+        await addNewTodo("Tarefa 1")
+        await addNewTodo("Tarefa 2")
+        await addNewTodo("Tarefa 3")
+        await addNewTodo("Tarefa 4")
+        await addNewTodo("Tarefa 5")
 
         await waitFor(async () => {
             const newTodoOne = screen.getByLabelText("Tarefa 1")
