@@ -115,7 +115,8 @@ describe("Home Page", () => {
             const newTodoTwo = screen.getByLabelText("Tarefa 2")
             userEvent.click(newTodoTwo) // Change to true
 
-            const selectInput = screen.getByLabelText("Selecione opção de filtro")
+            const selectInput = screen.getByRole("combobox")
+
             userEvent.selectOptions(selectInput, String(status))
 
             await waitFor(async () => {
