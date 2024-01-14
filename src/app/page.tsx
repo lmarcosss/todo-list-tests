@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Checkbox, TextInput } from "@/components"
+import { Button, Checkbox, Select, TextInput } from "@/components"
 import { FilterStatusEnum } from "@/enums"
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react"
 
@@ -26,6 +26,10 @@ export default function Home() {
     setTodos([...todos, { id:  String(new Date().getTime()), text: newTodo, isChecked: false }])
 
     setNewTodo("")
+  }
+
+  const handleChangeFilter = (e: ChangeEvent<HTMLSelectElement>) => {
+    setFilter(e.target.value as FilterStatusEnum)
   }
 
   const handleChangeCheckBox = (id:  string) => {
@@ -83,16 +87,16 @@ export default function Home() {
         <p>Lista de tarefas está vazia!</p>
       )}
 
-      <select
-        name="filter"
+      <Select
         id="filter"
+        onChange={handleChangeFilter}
+        options={[
+          { value: FilterStatusEnum.ALL, label: 'Todas', defaultChecked: true },
+          { value: FilterStatusEnum.COMPLETED, label: 'Concluídas' },
+          { value: FilterStatusEnum.NOT_COMPLETED, label: 'Pendentes' }
+        ]}
         value={filter}
-        onChange={(e: ChangeEvent<HTMLSelectElement>) => setFilter(e.target.value as FilterStatusEnum)}
-      >
-        <option defaultChecked value={FilterStatusEnum.ALL}>Mostrar Todas</option>
-        <option value={FilterStatusEnum.COMPLETED}>Concluídas</option>
-        <option value={FilterStatusEnum.NOT_COMPLETED}>Pendentes</option>
-      </select>
+      />
     </div>
   )
 }
